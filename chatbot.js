@@ -10,8 +10,6 @@ const responses = [
       section: "skills"
   },
   {
-},
-  {
       keywords: ["education", "study", "college", "degree"],
       reply: "Rushit is pursuing BCA at Silver Oak University (2023–2026). Currently in final year.",
       section: "education"
