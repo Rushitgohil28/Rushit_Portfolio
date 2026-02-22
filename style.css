@@ -438,7 +438,7 @@ nav {
     display: flex;
     padding: 10px;
     backdrop-filter: blur(10px);
-    background: rgba(255,255,255,0.05);
+    background: rgba(245, 235, 235, 0.05);
 }
 
 .chat-input input {
