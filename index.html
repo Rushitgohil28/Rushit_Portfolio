@@ -21,21 +21,20 @@
 
     <!-- ================= STRUCTURED DATA ================= -->
     <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Person",
-      "name": "Rushit Gohil",
-      "url": "https://rushitgohil28.github.io/Rushit_Portfolio/",
-      "jobTitle": "Web Developer",
-      "alumniOf": "Silver Oak University",
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "Ahmedabad",
-        "addressRegion": "Gujarat",
-        "addressCountry": "India"
-      }
-    }
-    </script>
+        {
+          "@context": "https://schema.org",
+          "@type": "Person",
+          "name": "Rushit Gohil",
+          "url": "https://rushitgohil28.github.io/Rushit_Portfolio/",
+          "jobTitle": "Web Developer",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Ahmedabad",
+            "addressRegion": "Gujarat",
+            "addressCountry": "India"
+          }
+        }
+        </script>
 
     <!-- ================= CSS ================= -->
     <link rel="stylesheet" href="style.css">
@@ -72,6 +71,17 @@
 
     <div class="chat-input">
         <input type="text" id="userInput" placeholder="Ask something..." onkeypress="handleKey(event)">
+    
+        <button onclick="startListening()">🎙️</button>
+    
+        <!-- WAVE -->
+        <div class="chat-wave" id="chatWave">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    
         <button onclick="sendMessage()">➤</button>
     </div>
 </div>
@@ -268,9 +278,7 @@
     <p>© 2026 Rushit Gohil. All Rights Reserved.</p>
   </footer>
   
-  <script src="chatbot.js"></script>
-  <script src="script.js"></script>
-</body>
+
  <!-- ================= SCRIPTS ================= -->
  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
  <script src="chatbot.js"></script>
@@ -286,6 +294,4 @@
          anchorPlacement: "top-bottom"
      });
  </script>
-
-</body>
 </html>
