@@ -64,23 +64,39 @@ document.querySelector(".chat-toggle").addEventListener("click", () => {
         showTyping();
     }
 });
-const sections = document.querySelectorAll("section");
-const navLinks = document.querySelectorAll(".nav-links a");
+// ================= NAVBAR ACTIVE ON SCROLL =================
 
-window.addEventListener("scroll", () => {
-    let current = "";
+// ================= NAVBAR ACTIVE FIX =================
 
-    sections.forEach(section => {
-        const sectionTop = section.offsetTop;
-        if (scrollY >= sectionTop - 150) {
-            current = section.getAttribute("id");
-        }
-    });
+document.addEventListener("DOMContentLoaded", function () {
 
-    navLinks.forEach(link => {
-        link.classList.remove("active");
-        if (link.getAttribute("href").includes(current)) {
-            link.classList.add("active");
-        }
-    });
+    const sections = document.querySelectorAll("section");
+    const navLinks = document.querySelectorAll(".nav-links a");
+
+    function setActiveLink() {
+
+        let scrollPosition = window.scrollY + 200;
+
+        sections.forEach(section => {
+
+            if (
+                scrollPosition >= section.offsetTop &&
+                scrollPosition < section.offsetTop + section.offsetHeight
+            ) {
+
+                navLinks.forEach(link => {
+                    link.classList.remove("active");
+
+                    if (link.getAttribute("href") === "#" + section.id) {
+                        link.classList.add("active");
+                    }
+                });
+
+            }
+
+        });
+    }
+
+    window.addEventListener("scroll", setActiveLink);
+
 });
