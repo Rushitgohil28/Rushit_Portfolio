@@ -73,8 +73,6 @@ p {
 
 /* ================= NAVBAR ================= */
 
-/* ================= iPHONE GLASS NAVBAR ================= */
-
 nav {
     position: fixed;
     top: 20px;
@@ -312,8 +310,6 @@ nav {
 }
 
 /* ================= ADVANCED CHATBOT ================= */
-
-/* ================= iPHONE GLASS CHATBOT ================= */
 
 .chat-toggle {
     position: fixed;
@@ -605,4 +601,35 @@ nav {
 .bot-message img:hover {
     transform: scale(1.05);
     box-shadow: 0 20px 40px rgba(56,189,248,0.5);
+}
+/* Mic wrapper */
+.mic-wrapper {
+    position: relative;
+    display: inline-block;
+    align-items: center;
+}
+
+/* Wave container */
+.chat-wave {
+    display: none;
+    align-items: center;
+    gap: 4px;
+    margin-left: 8px;
+}
+
+.chat-wave span {
+    width: 4px;
+    height: 6px;
+    background: #38bdf8;
+    border-radius: 10px;
+    animation: waveAnim 1s infinite ease-in-out;
+}
+
+.chat-wave span:nth-child(2) { animation-delay: 0.1s; }
+.chat-wave span:nth-child(3) { animation-delay: 0.2s; }
+.chat-wave span:nth-child(4) { animation-delay: 0.3s; }
+
+@keyframes waveAnim {
+    0%,100% { height: 6px; opacity: 0.5; }
+    50% { height: 18px; opacity: 1; }
 }
