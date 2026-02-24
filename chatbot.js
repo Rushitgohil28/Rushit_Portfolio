@@ -151,6 +151,8 @@ function botReply(text, sectionId = null, keyword = null) {
 
       // Special logic for resume
       if(keyword === "resume" || keyword === "cv") {
+        // Step 1: Show text message first
+      addMessage("Here is your resume 👇", "bot");
           const resumeDiv = document.createElement("div");
           resumeDiv.className = "bot-message";
           resumeDiv.style.display = "flex";
@@ -234,4 +236,5 @@ function startListening() {
 
     recognition.start();
 }
+
 
