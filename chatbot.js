@@ -1,4 +1,3 @@
-const startSound = new Audio("mic-start.mp3");
 const responses = [
   {
       keywords: ["hello", "hi", "hey", "hii", "good morning", "good evening", "good afternoon"],
@@ -235,3 +234,4 @@ function startListening() {
 
     recognition.start();
 }
+
