@@ -1,11 +1,12 @@
+const startSound = new Audio("mic-start.mp3");
 const responses = [
   {
       keywords: ["hello", "hi", "hey", "hii", "good morning", "good evening", "good afternoon"],
-      reply: "Hello 👋 Welcome to Rushit's Portfolio! How can I help you today?",
+      reply: "Hello 👋 I'm Rushit's virtual assistant. You can ask me about his skills, education, resume, or contact details.",
       section: null
   },
   {
-      keywords: ["skill", "technology", "tech stack"],
+      keywords: ["skill", "scale","technology", "tech stack"],
       reply: "Rushit knows HTML, CSS, JavaScript, Python, Git and Web Development fundamentals.",
       section: "skills"
   },
@@ -25,14 +26,34 @@ const responses = [
       section: "home"
   },
   {
+    keywords: ["language", "language known"],
+    reply: "Rushit knows Gujarati, Hindi and English.",
+    section: "contact"
+},
+  {
       keywords: ["location", "address", "where"],
       reply: "Rushit is located in Navrangpura, Ahmedabad, Gujarat.",
       section: "contact"
-  }
+  },
+  {
+    keywords: ["done","ok","nice"],
+    reply: "Thank You for your complement, Do you want to know about something...",
+}
 ];
-
+let voiceMode = false;
 function toggleChat() {
   const chat = document.getElementById("chatContainer");
+
+  const isOpen = chat.classList.contains("active");
+
+  if (isOpen) {
+      // If closing → go to homepage
+      const homeSection = document.getElementById("home");
+      if (homeSection) {
+          homeSection.scrollIntoView({ behavior: "smooth" });
+      }
+  }
+
   chat.classList.toggle("active");
 }
 
@@ -73,14 +94,48 @@ function sendMessage() {
 }
 
 function addMessage(text, type) {
-  const chat = document.getElementById("chatMessages");
-  const div = document.createElement("div");
-  div.className = type === "user" ? "user-message" : "bot-message";
-  div.innerText = text;
-  chat.appendChild(div);
-  chat.scrollTop = chat.scrollHeight;
+
+    const chat = document.getElementById("chatMessages");
+    const div = document.createElement("div");
+    div.className = type === "user" ? "user-message" : "bot-message";
+    div.innerText = text;
+
+    chat.appendChild(div);
+    chat.scrollTop = chat.scrollHeight;
+
+    // 🔥 Only speak if it came from mic
+    if (type === "bot" && voiceMode === true) {
+        speakText(text);
+        voiceMode = false;  // reset after speaking
+    }
 }
 
+function speakText(text) {
+
+    window.speechSynthesis.cancel(); // stop previous voice
+
+    const speech = new SpeechSynthesisUtterance(text);
+
+    speech.lang = "en-US";   // US sounds smoother than en-IN
+    speech.rate = 1.05;      // slightly faster (professional feel)
+    speech.pitch = 0.95;     // little lower = more AI tone
+    speech.volume = 1;
+
+    const voices = speechSynthesis.getVoices();
+
+    // Prefer Google or Microsoft voices
+    const preferredVoice = voices.find(v =>
+        v.name.includes("Google") ||
+        v.name.includes("Microsoft") ||
+        v.lang === "en-US"
+    );
+
+    if (preferredVoice) {
+        speech.voice = preferredVoice;
+    }
+
+    window.speechSynthesis.speak(speech);
+}
 // Updated botReply to handle resume
 function botReply(text, sectionId = null, keyword = null) {
   const chat = document.getElementById("chatMessages");
@@ -139,4 +194,44 @@ function botReply(text, sectionId = null, keyword = null) {
       }
       chat.scrollTop = chat.scrollHeight;
   }, 800);
+}
+// Voice Recognition
+function startListening() {
+
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+    if (!SpeechRecognition) {
+        alert("Use Google Chrome for voice feature.");
+        return;
+    }
+
+    const recognition = new SpeechRecognition();
+    const wave = document.getElementById("chatWave");
+
+    recognition.lang = "en-IN";
+
+    recognition.onstart = () => {
+        voiceMode = true;
+
+        // ✅ STOP any ongoing bot speech immediately
+        window.speechSynthesis.cancel();
+
+        if (wave) wave.style.display = "flex";
+    };
+
+    recognition.onresult = (event) => {
+        const transcript = event.results[0][0].transcript;
+        document.getElementById("userInput").value = transcript;
+        sendMessage();
+    };
+
+    recognition.onend = () => {
+        if (wave) wave.style.display = "none";
+    };
+
+    recognition.onerror = () => {
+        if (wave) wave.style.display = "none";
+    };
+
+    recognition.start();
 }
