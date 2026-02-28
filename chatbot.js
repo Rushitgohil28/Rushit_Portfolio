@@ -15,9 +15,26 @@ const responses = [
       section: "education"
   },
   {
-      keywords: ["contact", "phone", "email", "reach"],
-      reply: "You can contact Rushit at rushit28gohil@gmail.com or +91 97264 89466.",
-      section: "contact"
+    keywords: ["contact", "phone", "email", "reach"],
+    reply: `
+    <div class="contact-card">
+  
+        <h4>📬 Get In Touch</h4>
+  
+        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=rushit28gohil@gmail.com"
+           target="_blank"
+           class="chat-link full">
+           📧 rushit28gohil@gmail.com
+        </a>
+  
+        <a href="tel:+919726489466"
+           class="chat-link full">
+           📱 +91 97264 89466
+        </a>
+  
+    </div>
+    `,
+    section: null
   },
   {
       keywords: ["resume", "cv"],
@@ -34,10 +51,39 @@ const responses = [
       reply: "Rushit is located in Navrangpura, Ahmedabad, Gujarat.",
       section: "contact"
   },
+{
+    keywords: ["instagram", "insta"],
+    reply: `Here is Rushit's Instagram 👇
+  <a href="https://instagram.com/rolexx_rushi" target="_blank" class="chat-link">
+  🔗 Open Instagram
+  </a>`,
+    section: null
+  },
   {
-    keywords: ["done","ok","nice"],
-    reply: "Thank You for your complement, Do you want to know about something...",
-}
+    keywords: ["fb", "facebook"],
+    reply: `Here is Rushit's Facebook 👇
+  <a href="https://www.facebook.com/share/175DN594ou/" target="_blank" class="chat-link">
+  🔗 Open Facebook
+  </a>`,
+    section: null
+  },
+  {
+    keywords: ["github", "projects code"],
+    reply: `Here is Rushit's GitHub 👇
+  <a href="https://github.com/Rushitgohil28" target="_blank" class="chat-link">
+  🔗 Open GitHub
+  </a>`,
+    section: null
+  },
+  {
+    keywords: ["linkedin", "professional profile"],
+    reply: `Here is Rushit's LinkedIn 👇
+  <a href="https://linkedin.com/in/rushit-gohil-profile" target="_blank" class="chat-link">
+  🔗 Open LinkedIn
+  </a>`,
+    section: null
+  },
+  
 ];
 let voiceMode = false;
 function toggleChat() {
@@ -97,7 +143,7 @@ function addMessage(text, type) {
     const chat = document.getElementById("chatMessages");
     const div = document.createElement("div");
     div.className = type === "user" ? "user-message" : "bot-message";
-    div.innerText = text;
+    div.innerHTML = text;
 
     chat.appendChild(div);
     chat.scrollTop = chat.scrollHeight;
@@ -236,3 +282,4 @@ function startListening() {
 
     recognition.start();
 }
+
