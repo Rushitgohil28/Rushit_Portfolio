@@ -64,7 +64,7 @@ document.querySelector(".chat-toggle").addEventListener("click", () => {
         showTyping();
     }
 });
-// ================= NAVBAR ACTIVE ON SCROLL =================
+
 
 // ================= NAVBAR ACTIVE FIX =================
 
@@ -72,6 +72,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const sections = document.querySelectorAll("section");
     const navLinks = document.querySelectorAll(".nav-links a");
+
+    
 
     function setActiveLink() {
 
@@ -100,3 +102,70 @@ document.addEventListener("DOMContentLoaded", function () {
     window.addEventListener("scroll", setActiveLink);
 
 });
+// ================= 3D TILT EFFECT =================
+
+document.querySelectorAll(".project-card").forEach(card => {
+
+    card.addEventListener("mousemove", e => {
+
+        const x = e.offsetX;
+        const y = e.offsetY;
+
+        const rotateX = (y / card.offsetHeight - 0.5) * 15;
+        const rotateY = (x / card.offsetWidth - 0.5) * -15;
+
+        card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+        card.style.transition = "0.1s";
+    });
+
+    card.addEventListener("mouseleave", () => {
+        card.style.transform = "rotateX(0) rotateY(0)";
+        card.style.transition = "0.5s";
+    });
+
+});
+// ================= SMART AUTO GREETING =================
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const hour = new Date().getHours();
+    let greeting = "";
+
+    if (hour < 12) {
+        greeting = "Good Morning ☀️";
+    } 
+    else if (hour < 18) {
+        greeting = "Good Afternoon 🌤️";
+    } 
+    else if (hour < 22) {
+        greeting = "Good Evening 🌆";
+    } 
+    else {
+        greeting = "Working Late? Respect 🔥";
+    }
+
+    const heroTitle = document.querySelector(".hero-title");
+
+    if (heroTitle) {
+        heroTitle.innerText = greeting + ", I'm Rushit Gohil";
+    }
+
+});
+const profileCards = document.querySelectorAll(".profile-card");
+
+const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.style.opacity = "1";
+            entry.target.style.transform = "translateY(0)";
+        }
+    });
+}, { threshold: 0.2 });
+
+profileCards.forEach(card => {
+    card.style.opacity = "0";
+    card.style.transform = "translateY(40px)";
+    card.style.transition = "0.6s ease";
+    observer.observe(card);
+});
+
