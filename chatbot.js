@@ -10,8 +10,9 @@ const responses = [
       section: "skills"
   },
   {
-      keywords: ["education", "study", "college", "degree"],
-      reply: "Rushit is pursuing BCA at Silver Oak University (2023–2026). Currently in final year.",
+      keywords: ["education", "study", "college", "degree", "bca", "hons"],
+      /* Updated to perfectly sync with your 2026-2027 BCA Hons timeline */
+      reply: "Rushit has completed his 3-year BCA degree and is currently pursuing his BCA Hons (7th Semester) at Silver Oak University (2026–2027).",
       section: "education"
   },
   {
@@ -61,9 +62,9 @@ const responses = [
     section: null
   },
 
-  /* ================= 🔥 ADDED SOCIAL MEDIA CHAT OPTION BLOCK ================= */
+  /* ================= 🔥 SOCIAL MEDIA CHAT OPTION BLOCK ================= */
   {
-    keywords: ["social media", "social", "profiles", "links", "instagram", "insta", "fb", "facebook", "github", "linkedin"],
+    keywords: ["social media", "social", "profiles", "links"],
     reply: `
     <div class="contact-card" style="display: flex; flex-direction: column; gap: 8px; width: 100%;">
         <h4 style="margin-bottom: 4px;">🌐 Connect With Rushit</h4>
@@ -81,7 +82,7 @@ const responses = [
         </a>
     </div>
     `,
-    section: "profiles" // Smoothly scrolls the main web background straight down to the Connect section too!
+    section: "profiles" 
   }
 ];
 
