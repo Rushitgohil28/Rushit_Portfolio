@@ -15,9 +15,15 @@ const responses = [
       section: "education"
   },
   {
-      keywords: ["contact", "phone", "email", "reach"],
-      reply: "You can contact Rushit at rushit28gohil@gmail.com or +91 97264 89466.",
-      section: "contact"
+    keywords: ["contact", "phone", "email", "reach"],
+    reply: `
+    <div class="contact-card">
+        <h4>📬 Get In Touch</h4>
+        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=rushit28gohil@gmail.com" target="_blank" class="chat-link full">📧 rushit28gohil@gmail.com</a>
+        <a href="tel:+919726489466" class="chat-link full">📱 +91 97264 89466</a>
+    </div>
+    `,
+    section: null
   },
   {
       keywords: ["resume", "cv"],
@@ -28,31 +34,69 @@ const responses = [
     keywords: ["language", "language known"],
     reply: "Rushit knows Gujarati, Hindi and English.",
     section: "contact"
-},
+  },
   {
       keywords: ["location", "address", "where"],
       reply: "Rushit is located in Navrangpura, Ahmedabad, Gujarat.",
       section: "contact"
   },
   {
-    keywords: ["done","ok","nice"],
-    reply: "Thank You for your complement, Do you want to know about something...",
-}
+    keywords: ["instagram", "insta"],
+    reply: `Here is Rushit's Instagram 👇 <a href="https://instagram.com/rolexx_rushi" target="_blank" class="chat-link">🔗 Open Instagram</a>`,
+    section: null
+  },
+  {
+    keywords: ["fb", "facebook"],
+    reply: `Here is Rushit's Facebook 👇 <a href="https://www.facebook.com/share/175DN594ou/" target="_blank" class="chat-link">🔗 Open Facebook</a>`,
+    section: null
+  },
+  {
+    keywords: ["github", "projects code"],
+    reply: `Here is Rushit's GitHub 👇 <a href="https://github.com/Rushitgohil28" target="_blank" class="chat-link">🔗 Open GitHub</a>`,
+    section: null
+  },
+  {
+    keywords: ["linkedin", "professional profile"],
+    reply: `Here is Rushit's LinkedIn 👇 <a href="https://linkedin.com/in/rushit-gohil-profile" target="_blank" class="chat-link">🔗 Open LinkedIn</a>`,
+    section: null
+  },
+
+  /* ================= 🔥 ADDED SOCIAL MEDIA CHAT OPTION BLOCK ================= */
+  {
+    keywords: ["social media", "social", "profiles", "links", "instagram", "insta", "fb", "facebook", "github", "linkedin"],
+    reply: `
+    <div class="contact-card" style="display: flex; flex-direction: column; gap: 8px; width: 100%;">
+        <h4 style="margin-bottom: 4px;">🌐 Connect With Rushit</h4>
+        <a href="https://linkedin.com/in/rushit-gohil-profile" target="_blank" class="chat-link full" style="display: block; text-decoration: none;">
+            <i class="fab fa-linkedin" style="color: #0a66c2; margin-right: 4px;"></i> LinkedIn
+        </a>
+        <a href="https://github.com/Rushitgohil28" target="_blank" class="chat-link full" style="display: block; text-decoration: none;">
+            <i class="fab fa-github" style="color: #ffffff; margin-right: 4px;"></i> GitHub
+        </a>
+        <a href="https://instagram.com/rolexx_rushi" target="_blank" class="chat-link full" style="display: block; text-decoration: none;">
+            <i class="fab fa-instagram" style="color: #e1306c; margin-right: 4px;"></i> Instagram
+        </a>
+        <a href="https://www.facebook.com/share/175DN594ou/" target="_blank" class="chat-link full" style="display: block; text-decoration: none;">
+            <i class="fab fa-facebook" style="color: #1877f2; margin-right: 4px;"></i> Facebook
+        </a>
+    </div>
+    `,
+    section: "profiles" // Smoothly scrolls the main web background straight down to the Connect section too!
+  }
 ];
+
 let voiceMode = false;
+
 function toggleChat() {
   const chat = document.getElementById("chatContainer");
-
   const isOpen = chat.classList.contains("active");
 
   if (isOpen) {
-      // If closing → go to homepage
       const homeSection = document.getElementById("home");
       if (homeSection) {
           homeSection.scrollIntoView({ behavior: "smooth" });
       }
   }
-
   chat.classList.toggle("active");
 }
 
@@ -75,7 +119,6 @@ function sendMessage() {
 
   setTimeout(() => {
       let found = false;
-
       for (let item of responses) {
           for (let word of item.keywords) {
               if (message.includes(word)) {
@@ -85,7 +128,6 @@ function sendMessage() {
               }
           }
       }
-
       if (!found) {
           botReply("Sorry, I didn't understand. Try asking about skills, education, contact, resume or location.");
       }
@@ -93,53 +135,41 @@ function sendMessage() {
 }
 
 function addMessage(text, type) {
-
     const chat = document.getElementById("chatMessages");
     const div = document.createElement("div");
     div.className = type === "user" ? "user-message" : "bot-message";
-    div.innerText = text;
+    div.innerHTML = text;
 
     chat.appendChild(div);
     chat.scrollTop = chat.scrollHeight;
 
-    // 🔥 Only speak if it came from mic
     if (type === "bot" && voiceMode === true) {
         speakText(text);
-        voiceMode = false;  // reset after speaking
+        voiceMode = false;  
     }
 }
 
 function speakText(text) {
-
-    window.speechSynthesis.cancel(); // stop previous voice
-
+    window.speechSynthesis.cancel(); 
     const speech = new SpeechSynthesisUtterance(text);
-
-    speech.lang = "en-US";   // US sounds smoother than en-IN
-    speech.rate = 1.05;      // slightly faster (professional feel)
-    speech.pitch = 0.95;     // little lower = more AI tone
+    speech.lang = "en-US";   
+    speech.rate = 1.05;      
+    speech.pitch = 0.95;     
     speech.volume = 1;
 
     const voices = speechSynthesis.getVoices();
-
-    // Prefer Google or Microsoft voices
     const preferredVoice = voices.find(v =>
         v.name.includes("Google") ||
         v.name.includes("Microsoft") ||
         v.lang === "en-US"
     );
 
-    if (preferredVoice) {
-        speech.voice = preferredVoice;
-    }
-
+    if (preferredVoice) speech.voice = preferredVoice;
     window.speechSynthesis.speak(speech);
 }
-// Updated botReply to handle resume
+
 function botReply(text, sectionId = null, keyword = null) {
   const chat = document.getElementById("chatMessages");
-
-  // Show typing animation
   const typing = document.createElement("div");
   typing.className = "bot-message";
   typing.innerText = "Typing...";
@@ -149,27 +179,23 @@ function botReply(text, sectionId = null, keyword = null) {
   setTimeout(() => {
       typing.remove();
 
-      // Special logic for resume
-      if(keyword === "resume" || keyword === "cv") {
-        // Step 1: Show text message first
-    addMessage("Here is your resume...", "bot");
+      if (keyword === "resume" || keyword === "cv") {
+          addMessage("Here is your resume...", "bot");
           const resumeDiv = document.createElement("div");
           resumeDiv.className = "bot-message";
           resumeDiv.style.display = "flex";
           resumeDiv.style.flexDirection = "column";
           resumeDiv.style.gap = "10px";
 
-          // Optional resume thumbnail
           const img = document.createElement("img");
-          img.src = "resume.jpg"; // put your resume image here
+          img.src = "resume.jpg"; 
           img.alt = "Resume Preview";
           img.style.width = "100%";
           img.style.borderRadius = "10px";
           img.style.border = "1px solid rgba(255,255,255,0.2)";
 
-          // Download button
           const button = document.createElement("a");
-          button.href = "resume.pdf"; // your resume PDF
+          button.href = "resume.pdf"; 
           button.download = "Rushit_Gohil_Resume.pdf";
           button.innerText = "Download Resume 📄";
           button.style.padding = "10px";
@@ -179,9 +205,6 @@ function botReply(text, sectionId = null, keyword = null) {
           button.style.fontWeight = "600";
           button.style.textAlign = "center";
           button.style.textDecoration = "none";
-          button.style.transition = "0.3s ease";
-          button.onmouseover = () => button.style.transform = "scale(1.05)";
-          button.onmouseout = () => button.style.transform = "scale(1)";
 
           resumeDiv.appendChild(img);
           resumeDiv.appendChild(button);
@@ -191,16 +214,15 @@ function botReply(text, sectionId = null, keyword = null) {
       }
 
       if (sectionId) {
-          document.getElementById(sectionId).scrollIntoView({ behavior: "smooth" });
+          const sectionElement = document.getElementById(sectionId);
+          if (sectionElement) sectionElement.scrollIntoView({ behavior: "smooth" });
       }
       chat.scrollTop = chat.scrollHeight;
   }, 800);
 }
-// Voice Recognition
+
 function startListening() {
-
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-
     if (!SpeechRecognition) {
         alert("Use Google Chrome for voice feature.");
         return;
@@ -208,15 +230,11 @@ function startListening() {
 
     const recognition = new SpeechRecognition();
     const wave = document.getElementById("chatWave");
-
     recognition.lang = "en-IN";
 
     recognition.onstart = () => {
         voiceMode = true;
-
-        // ✅ STOP any ongoing bot speech immediately
         window.speechSynthesis.cancel();
-
         if (wave) wave.style.display = "flex";
     };
 
@@ -226,13 +244,7 @@ function startListening() {
         sendMessage();
     };
 
-    recognition.onend = () => {
-        if (wave) wave.style.display = "none";
-    };
-
-    recognition.onerror = () => {
-        if (wave) wave.style.display = "none";
-    };
-
+    recognition.onend = () => { if (wave) wave.style.display = "none"; };
+    recognition.onerror = () => { if (wave) wave.style.display = "none"; };
     recognition.start();
 }
