@@ -11,7 +11,6 @@ const responses = [
   },
   {
       keywords: ["education", "study", "college", "degree", "bca", "hons"],
-      /* Updated to perfectly sync with your 2026-2027 BCA Hons timeline */
       reply: "Rushit has completed his 3-year BCA degree and is currently pursuing his BCA Hons (7th Semester) at Silver Oak University (2026–2027).",
       section: "education"
   },
@@ -61,8 +60,6 @@ const responses = [
     reply: `Here is Rushit's LinkedIn 👇 <a href="https://linkedin.com/in/rushit-gohil-profile" target="_blank" class="chat-link">🔗 Open LinkedIn</a>`,
     section: null
   },
-
-  /* ================= 🔥 SOCIAL MEDIA CHAT OPTION BLOCK ================= */
   {
     keywords: ["social media", "social", "profiles", "links"],
     reply: `
@@ -150,6 +147,7 @@ function addMessage(text, type) {
     }
 }
 
+// Fixed text selection voicing logic parameters loop maps
 function speakText(text) {
     window.speechSynthesis.cancel(); 
     const speech = new SpeechSynthesisUtterance(text);
